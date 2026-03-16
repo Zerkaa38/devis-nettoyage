@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Devis RS Plendissant</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#1A6FD4;--blue2:#0D4A9E;--bg:#EEF3FB;--card:#fff;--border:#D0DFF5;--text:#1A2A4A;--muted:#6B8AB0;--warn:#E07B00;--r:16px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{font-family:"Epilogue",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px;}
+.topbar{background:var(--blue);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.topbar-brand{font-family:"Syne",sans-serif;font-size:17px;font-weight:800;color:#fff;}
+.topbar-sub{font-size:11px;color:rgba(255,255,255,0.75);margin-top:1px;}
+.reset-btn{background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:12px;padding:8px 14px;border-radius:20px;cursor:pointer;font-family:"Epilogue",sans-serif;}
+.total-banner{margin:14px;background:linear-gradient(135deg,var(--blue),var(--blue2));border-radius:var(--r);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
+.total-label{font-size:11px;color:rgba(255,255,255,0.75);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
+.total-amount{font-family:"Syne",sans-serif;font-size:36px;font-weight:800;color:#fff;line-height:1;}
+.total-detail{font-size:11px;color:rgba(255,255,255,0.6);margin-top:3px;}
+.btns{display:flex;flex-direction:column;gap:7px;flex-shrink:0;}
+.action-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:12px;font-weight:500;padding:9px 14px;border-radius:10px;cursor:pointer;white-space:nowrap;font-family:"Epilogue",sans-serif;text-align:center;}
+.sec{margin:14px 14px 0;}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.sec-ico{width:34px;height:34px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.sec-ttl{font-family:"Syne",sans-serif;font-size:14px;font-weight:700;color:var(--text);}
+.sec-tog{margin-left:auto;background:none;border:none;color:var(--blue);font-size:20px;cursor:pointer;padding:4px 8px;line-height:1;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:15px;box-shadow:0 2px 10px rgba(26,111,212,.07);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px;}
+.tbtn{background:#EAF0FB;border:1.5px solid var(--border);border-radius:10px;padding:10px 6px;cursor:pointer;text-align:center;font-size:12px;color:var(--muted);font-family:"Epilogue",sans-serif;line-height:1.4;}
+.tbtn .rate{display:block;font-family:"Syne",sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-top:3px;}
+.tbtn.on{background:rgba(26,111,212,.1);border-color:var(--blue);color:var(--blue);}
+.tbtn.on .rate{color:var(--blue);}
+.divider{height:1px;background:var(--border);margin:12px 0;}
+.row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.row:last-child{margin-bottom:0;}
+.rlbl{flex:1;font-size:13px;color:var(--muted);}
+.rlbl strong{display:block;color:var(--text);font-weight:500;font-size:13px;margin-bottom:1px;}
+.num-input{background:#EAF0FB;border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:15px;font-weight:500;padding:10px 12px;width:82px;text-align:right;outline:none;font-family:"Epilogue",sans-serif;}
+.num-input:focus{border-color:var(--blue);}
+.unit{font-size:12px;color:var(--muted);min-width:22px;}
+.ltot{font-family:"Syne",sans-serif;font-size:15px;font-weight:700;color:var(--blue);min-width:54px;text-align:right;}
+.hint{font-size:11px;color:var(--muted);line-height:1.55;}
+.depl-tot{font-family:"Syne",sans-serif;font-size:14px;color:var(--warn);font-weight:700;margin-left:auto;}
+.vrow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.vrow:last-child{border-bottom:none;padding-bottom:0;}
+.vinfo{flex:1;}
+.vname{font-size:13px;font-weight:500;color:var(--text);}
+.vprice{font-size:11px;color:var(--muted);margin-top:2px;}
+.ctr{display:flex;align-items:center;gap:12px;}
+.cbtn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:#EAF0FB;color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-family:"Epilogue",sans-serif;}
+.cval{font-family:"Syne",sans-serif;font-size:16px;font-weight:700;min-width:24px;text-align:center;}
+.vsub{font-family:"Syne",sans-serif;font-size:14px;font-weight:700;color:var(--blue);min-width:46px;text-align:right;}
+.majo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.mbtn{background:#EAF0FB;border:1.5px solid var(--border);border-radius:10px;color:var(--muted);padding:10px 8px;cursor:pointer;text-align:center;font-size:12px;font-family:"Epilogue",sans-serif;line-height:1.4;}
+.mbtn.on{background:rgba(224,123,0,.1);border-color:var(--warn);color:var(--warn);font-weight:500;}
+.resume{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:15px;box-shadow:0 2px 10px rgba(26,111,212,.07);}
+.rline{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.rline:last-of-type{border-bottom:none;}
+.rlabel{color:var(--muted);}
+.rval{font-family:"Syne",sans-serif;font-weight:600;font-size:14px;}
+.rtotal{display:flex;justify-content:space-between;align-items:center;padding:12px 0 0;margin-top:4px;}
+.rtlabel{font-family:"Syne",sans-serif;font-weight:700;font-size:16px;}
+.rtval{font-family:"Syne",sans-serif;font-weight:800;font-size:24px;color:var(--blue);}
+textarea{background:#EAF0FB;border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;padding:12px;width:100%;resize:none;height:68px;outline:none;font-family:"Epilogue",sans-serif;}
+textarea::placeholder{color:var(--muted);}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--blue);color:#fff;font-family:"Syne",sans-serif;font-size:14px;font-weight:700;padding:12px 24px;border-radius:30px;transition:transform .3s;z-index:999;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-brand">🧹 Calculateur Devis</div>
+    <div class="topbar-sub">RS Plendissant Nettoyages</div>
+  </div>
+  <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
+</div>
+
+<div class="total-banner">
+  <div>
+    <div class="total-label">Total à facturer</div>
+    <div class="total-amount" id="grand-total">0 €</div>
+    <div class="total-detail" id="total-detail">—</div>
+  </div>
+  <div class="btns">
+    <button class="action-btn" onclick="doWhatsApp()">💬 WhatsApp</button>
+    <button class="action-btn" onclick="doSMS()">📱 SMS</button>
+  </div>
+</div>
+
+<!-- MÉNAGE -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-ico">🏠</div><div class="sec-ttl">Ménage & entretien</div><button class="sec-tog" onclick="tog('menage')">▾</button></div>
+  <div id="body-menage">
+    <div class="card">
+      <div class="grid2">
+        <button class="tbtn on" id="tbtn-entretien" onclick="setType('entretien')">Entretien courant<span class="rate">1 €/m²</span></button>
+        <button class="tbtn" id="tbtn-fond" onclick="setType('fond')">Grand ménage<span class="rate">2 €/m²</span></button>
+        <button class="tbtn" id="tbtn-bail" onclick="setType('bail')">Fin de bail<span class="rate">2,50 €/m²</span></button>
+        <button class="tbtn" id="tbtn-chantier" onclick="setType('chantier')">Fin de chantier<span class="rate">3 €/m²</span></button>
+      </div>
+      <div class="divider"></div>
+      <div class="row">
+        <div class="rlbl"><strong>Surface</strong>m² habitables</div>
+        <input class="num-input" type="number" id="surface" min="0" max="500" placeholder="0" oninput="calc()" onchange="calc()">
+        <span class="unit">m²</span>
+        <span class="ltot" id="lt-menage">0 €</span>
+      </div>
+      <div class="divider"></div>
+      <div class="hint">Repères : studio ~25 m² · T2 ~45 m² · T3 ~65 m² · T4 ~85 m²<br>Temps estimé : 25m² ≈ 1h · 50m² ≈ 1h30 · 75m² ≈ 2h30 · 100m² ≈ 3h30</div>
+    </div>
+  </div>
+</div>
+
+<!-- VITRES -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-ico">🪟</div><div class="sec-ttl">Nettoyage de vitres</div><button class="sec-tog" onclick="tog('vitres')">▾</button></div>
+  <div id="body-vitres">
+    <div class="card">
+      <div class="vrow"><div class="vinfo"><div class="vname">Vitre classique</div><div class="vprice">Fenêtre standard 2 faces — 3 €</div></div><div class="ctr"><button class="cbtn" onclick="chgV('std',-1)">−</button><span class="cval" id="cv-std">0</span><button class="cbtn" onclick="chgV('std',1)">+</button></div><span class="vsub" id="lt-vstd">0 €</span></div>
+      <div class="vrow"><div class="vinfo"><div class="vname">Porte-fenêtre</div><div class="vprice">Double vantail 2 faces — 5 €</div></div><div class="ctr"><button class="cbtn" onclick="chgV('pf',-1)">−</button><span class="cval" id="cv-pf">0</span><button class="cbtn" onclick="chgV('pf',1)">+</button></div><span class="vsub" id="lt-vpf">0 €</span></div>
+      <div class="vrow"><div class="vinfo"><div class="vname">Miroir</div><div class="vprice">1 face — 2 €</div></div><div class="ctr"><button class="cbtn" onclick="chgV('mir',-1)">−</button><span class="cval" id="cv-mir">0</span><button class="cbtn" onclick="chgV('mir',1)">+</button></div><span class="vsub" id="lt-vmir">0 €</span></div>
+      <div class="vrow"><div class="vinfo"><div class="vname">Baie vitrée</div><div class="vprice">Grande surface 2 faces — 8 €</div></div><div class="ctr"><button class="cbtn" onclick="chgV('baie',-1)">−</button><span class="cval" id="cv-baie">0</span><button class="cbtn" onclick="chgV('baie',1)">+</button></div><span class="vsub" id="lt-vbaie">0 €</span></div>
+      <div class="vrow"><div class="vinfo"><div class="vname">Velux / difficile</div><div class="vprice">Accès compliqué — 10 €</div></div><div class="ctr"><button class="cbtn" onclick="chgV('velux',-1)">−</button><span class="cval" id="cv-velux">0</span><button class="cbtn" onclick="chgV('velux',1)">+</button></div><span class="vsub" id="lt-vvelux">0 €</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOCAUX PRO -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-ico">🏢</div><div class="sec-ttl">Locaux professionnels</div><button class="sec-tog" onclick="tog('pro')">▾</button></div>
+  <div id="body-pro">
+    <div class="card" style="margin-bottom:10px">
+      <div class="hint" style="margin-bottom:10px;font-weight:500;color:var(--muted);text-transform:uppercase;font-size:10px;letter-spacing:.06em">Ligne 1</div>
+      <div class="grid3">
+        <button class="tbtn on" id="pbtn1-bureaux" onclick="setPro(1,'bureaux')">Bureaux<span class="rate">1,50 €</span></button>
+        <button class="tbtn" id="pbtn1-batiment" onclick="setPro(1,'batiment')">Bâtiment<span class="rate">1,20 €</span></button>
+        <button class="tbtn" id="pbtn1-entrepot" onclick="setPro(1,'entrepot')">Entrepôt<span class="rate">0,80 €</span></button>
+      </div>
+      <div class="row" style="margin-bottom:0">
+        <div class="rlbl"><strong>Surface</strong>m²</div>
+        <input class="num-input" type="number" id="sp1" min="0" placeholder="0" oninput="calc()" onchange="calc()">
+        <span class="unit">m²</span>
+        <span class="ltot" id="lt-pro1">0 €</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="hint" style="margin-bottom:10px;font-weight:500;color:var(--muted);text-transform:uppercase;font-size:10px;letter-spacing:.06em">Ligne 2 (optionnel)</div>
+      <div class="grid3">
+        <button class="tbtn" id="pbtn2-bureaux" onclick="setPro(2,'bureaux')">Bureaux<span class="rate">1,50 €</span></button>
+        <button class="tbtn" id="pbtn2-batiment" onclick="setPro(2,'batiment')">Bâtiment<span class="rate">1,20 €</span></button>
+        <button class="tbtn on" id="pbtn2-entrepot" onclick="setPro(2,'entrepot')">Entrepôt<span class="rate">0,80 €</span></button>
+      </div>
+      <div class="row" style="margin-bottom:0">
+        <div class="rlbl"><strong>Surface</strong>m²</div>
+        <input class="num-input" type="number" id="sp2" min="0" placeholder="0" oninput="calc()" onchange="calc()">
+        <span class="unit">m²</span>
+        <span class="ltot" id="lt-pro2">0 €</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEXTILE -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-ico">🛋️</div><div class="sec-ttl">Canapé, moquette & tapis</div><button class="sec-tog" onclick="tog('textile')">▾</button></div>
+  <div id="body-textile">
+    <div class="card">
+      <div class="vrow"><div class="vinfo"><div class="vname">Canapé — par place</div><div class="vprice">Shampooing — 35 € / place</div></div><div class="ctr"><button class="cbtn" onclick="chgT('canape',-1)">−</button><span class="cval" id="ct-canape">0</span><button class="cbtn" onclick="chgT('canape',1)">+</button></div><span class="vsub" id="lt-canape">0 €</span></div>
+      <div class="vrow"><div class="vinfo"><div class="vname">Moquette</div><div class="vprice">Shampooing — 6 € / m²</div></div><div class="ctr"><button class="cbtn" onclick="chgT('moq',-1)">−</button><span class="cval" id="ct-moq">0</span><button class="cbtn" onclick="chgT('moq',1)">+</button></div><span class="vsub" id="lt-moq">0 €</span></div>
+      <div class="vrow"><div class="vinfo"><div class="vname">Tapis</div><div class="vprice">Shampooing — 7 € / m²</div></div><div class="ctr"><button class="cbtn" onclick="chgT('tapis',-1)">−</button><span class="cval" id="ct-tapis">0</span><button class="cbtn" onclick="chgT('tapis',1)">+</button></div><span class="vsub" id="lt-tapis">0 €</span></div>
+      <div class="hint" style="margin-top:10px">Canapé : nombre de places (méridienne = 2). Moquette/Tapis : m².</div>
+    </div>
+  </div>
+</div>
+
+<!-- DÉPLACEMENT -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-ico">🚗</div><div class="sec-ttl">Déplacement</div><button class="sec-tog" onclick="tog('depl')">▾</button></div>
+  <div id="body-depl">
+    <div class="card">
+      <div class="row" style="margin-bottom:6px">
+        <div class="rlbl"><strong>Distance aller</strong>depuis Villefontaine</div>
+        <input class="num-input" type="number" id="km" min="0" placeholder="0" oninput="calc()" onchange="calc()">
+        <span class="unit">km</span>
+        <span class="depl-tot" id="lt-depl">0 €</span>
+      </div>
+      <div class="hint">0,60 €/km aller-retour</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAJORATIONS -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-ico">📅</div><div class="sec-ttl">Majorations</div><button class="sec-tog" onclick="tog('majo')">▾</button></div>
+  <div id="body-majo">
+    <div class="card">
+      <div class="majo-grid">
+        <button class="mbtn" id="mbtn-we" onclick="togM('we')">📅 Week-end<br><small>+20%</small></button>
+        <button class="mbtn" id="mbtn-ferie" onclick="togM('ferie')">🎉 Jour férié<br><small>+25%</small></button>
+        <button class="mbtn" id="mbtn-lyon" onclick="togM('lyon')">🏙 Lyon<br><small>+15%</small></button>
+        <button class="mbtn" id="mbtn-urge" onclick="togM('urge')">⚡ Urgence<br><small>+30%</small></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTE -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-ico">📝</div><div class="sec-ttl">Note</div><button class="sec-tog" onclick="tog('note')">▾</button></div>
+  <div id="body-note">
+    <div class="card">
+      <textarea id="note" placeholder="Ex : 3e étage sans ascenseur, chien présent…"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- RÉSUMÉ -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-ico">🧾</div><div class="sec-ttl">Récapitulatif</div></div>
+  <div class="resume">
+    <div class="rline"><span class="rlabel">Ménage (<span id="r-surf">0</span> m² × <span id="r-rate">1</span> €)</span><span class="rval" id="r-menage">0 €</span></div>
+    <div class="rline"><span class="rlabel">Locaux pro</span><span class="rval" id="r-pro">0 €</span></div>
+    <div class="rline"><span class="rlabel">Vitres</span><span class="rval" id="r-vitres">0 €</span></div>
+    <div class="rline"><span class="rlabel">Textile</span><span class="rval" id="r-textile">0 €</span></div>
+    <div class="rline"><span class="rlabel">Déplacement</span><span class="rval" id="r-depl">0 €</span></div>
+    <div class="rline"><span class="rlabel">Majorations</span><span class="rval" id="r-majo">—</span></div>
+    <div class="rtotal"><span class="rtlabel">Total</span><span class="rtval" id="r-total">0 €</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ Copié !</div>
+
+<script>
+var TYPES = {
+  entretien:{label:"Entretien courant",rate:1},
+  fond:{label:"Grand ménage",rate:2},
+  bail:{label:"Fin de bail",rate:2.5},
+  chantier:{label:"Fin de chantier",rate:3}
+};
+var PRO = {
+  bureaux:{label:"Bureaux",rate:1.5},
+  batiment:{label:"Batiment / parties communes",rate:1.2},
+  entrepot:{label:"Entrepot / zone industrielle",rate:0.8}
+};
+var VPRIX = {std:3,pf:5,mir:2,baie:8,velux:10};
+var TPRIX = {canape:35,moq:6,tapis:7};
+var curType="entretien", curPro1="bureaux", curPro2="entrepot";
+var V={std:0,pf:0,mir:0,baie:0,velux:0};
+var T={canape:0,moq:0,tapis:0};
+var M={we:false,ferie:false,lyon:false,urge:false};
+
+function f(n){return Math.round(n)+" €";}
+function g(id){var el=document.getElementById(id);return el?parseFloat(el.value)||0:0;}
+function s(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+
+function calc(){
+  var surf=g("surface"),rate=TYPES[curType].rate,menage=surf*rate;
+  s("lt-menage",f(menage));s("r-surf",surf);s("r-rate",rate);
+  var vstd=V.std*VPRIX.std,vpf=V.pf*VPRIX.pf,vmir=V.mir*VPRIX.mir,vbaie=V.baie*VPRIX.baie,vvelux=V.velux*VPRIX.velux;
+  var totV=vstd+vpf+vmir+vbaie+vvelux;
+  s("lt-vstd",f(vstd));s("lt-vpf",f(vpf));s("lt-vmir",f(vmir));s("lt-vbaie",f(vbaie));s("lt-vvelux",f(vvelux));
+  var sp1=g("sp1"),sp2=g("sp2");
+  var pro1=sp1*PRO[curPro1].rate,pro2=sp2*PRO[curPro2].rate,totP=pro1+pro2;
+  s("lt-pro1",f(pro1));s("lt-pro2",f(pro2));
+  var tc=T.canape*TPRIX.canape,tm=T.moq*TPRIX.moq,tt=T.tapis*TPRIX.tapis,totT=tc+tm+tt;
+  s("lt-canape",f(tc));s("lt-moq",f(tm));s("lt-tapis",f(tt));
+  var km=g("km"),depl=km*0.6;
+  s("lt-depl",f(depl));
+  var base=menage+totP+totV+totT;
+  var mr=0,ml=[];
+  if(M.we){mr+=0.2;ml.push("WE +20%");}
+  if(M.ferie){mr+=0.25;ml.push("Ferie +25%");}
+  if(M.lyon){mr+=0.15;ml.push("Lyon +15%");}
+  if(M.urge){mr+=0.3;ml.push("Urgence +30%");}
+  var ma=base*mr,total=base+ma+depl;
+  s("r-menage",f(menage));s("r-pro",f(totP));s("r-vitres",f(totV));s("r-textile",f(totT));
+  s("r-depl",f(depl));s("r-majo",ml.length?ml.join(" + ")+" = +"+f(ma):"—");
+  s("r-total",f(total));s("grand-total",f(total));
+  var det=[];
+  if(menage>0)det.push(surf+"m2x"+rate+"eu");
+  if(totP>0)det.push("Pro "+f(totP));
+  if(totV>0)det.push("Vitres "+f(totV));
+  if(totT>0)det.push("Textile "+f(totT));
+  if(depl>0)det.push("Depl."+f(depl));
+  if(ma>0)det.push("+"+f(ma));
+  s("total-detail",det.join(" · ")||"—");
+}
+
+function setType(t){
+  curType=t;
+  var ks=Object.keys(TYPES);
+  for(var i=0;i<ks.length;i++){
+    document.getElementById("tbtn-"+ks[i]).className="tbtn"+(ks[i]===t?" on":"");
+  }
+  calc();
+}
+
+function setPro(line,t){
+  var ks=Object.keys(PRO);
+  if(line===1){
+    curPro1=t;
+    for(var i=0;i<ks.length;i++) document.getElementById("pbtn1-"+ks[i]).className="tbtn"+(ks[i]===t?" on":"");
+  } else {
+    curPro2=t;
+    for(var i=0;i<ks.length;i++) document.getElementById("pbtn2-"+ks[i]).className="tbtn"+(ks[i]===t?" on":"");
+  }
+  calc();
+}
+
+function chgV(k,d){V[k]=Math.max(0,V[k]+d);s("cv-"+k,V[k]);calc();}
+function chgT(k,d){T[k]=Math.max(0,T[k]+d);s("ct-"+k,T[k]);calc();}
+
+function togM(k){
+  M[k]=!M[k];
+  document.getElementById("mbtn-"+k).className="mbtn"+(M[k]?" on":"");
+  calc();
+}
+
+function tog(n){
+  var el=document.getElementById("body-"+n);
+  if(el) el.style.display=el.style.display==="none"?"":"none";
+}
+
+function resetAll(){
+  var ids=["surface","sp1","sp2","km"];
+  for(var i=0;i<ids.length;i++) document.getElementById(ids[i]).value="";
+  var vk=Object.keys(V);for(var i=0;i<vk.length;i++){V[vk[i]]=0;s("cv-"+vk[i],0);}
+  var tk=Object.keys(T);for(var i=0;i<tk.length;i++){T[tk[i]]=0;s("ct-"+tk[i],0);}
+  var mk=Object.keys(M);for(var i=0;i<mk.length;i++){M[mk[i]]=false;document.getElementById("mbtn-"+mk[i]).className="mbtn";}
+  setType("entretien");setPro(1,"bureaux");setPro(2,"entrepot");
+  document.getElementById("note").value="";
+  calc();
+}
+
+function buildLines(){
+  var surf=g("surface"),km=g("km"),note=document.getElementById("note").value;
+  var lines=["DEVIS RS PLENDISSANT",""];
+  if(surf>0) lines.push("Menage ("+TYPES[curType].label+") : "+surf+" m2 = "+document.getElementById("lt-menage").textContent);
+  if(g("sp1")>0) lines.push(PRO[curPro1].label+" : "+g("sp1")+" m2 = "+document.getElementById("lt-pro1").textContent);
+  if(g("sp2")>0) lines.push(PRO[curPro2].label+" : "+g("sp2")+" m2 = "+document.getElementById("lt-pro2").textContent);
+  if(V.std) lines.push("Vitres classiques : "+V.std+" x 3 = "+document.getElementById("lt-vstd").textContent);
+  if(V.pf) lines.push("Portes-fenetres : "+V.pf+" x 5 = "+document.getElementById("lt-vpf").textContent);
+  if(V.mir) lines.push("Miroirs : "+V.mir+" x 2 = "+document.getElementById("lt-vmir").textContent);
+  if(V.baie) lines.push("Baies vitrees : "+V.baie+" x 8 = "+document.getElementById("lt-vbaie").textContent);
+  if(V.velux) lines.push("Velux : "+V.velux+" x 10 = "+document.getElementById("lt-vvelux").textContent);
+  if(T.canape) lines.push("Canape : "+T.canape+" place(s) x 35 = "+document.getElementById("lt-canape").textContent);
+  if(T.moq) lines.push("Moquette : "+T.moq+" m2 x 6 = "+document.getElementById("lt-moq").textContent);
+  if(T.tapis) lines.push("Tapis : "+T.tapis+" m2 x 7 = "+document.getElementById("lt-tapis").textContent);
+  if(km>0) lines.push("Deplacement : "+km+" km = "+document.getElementById("lt-depl").textContent);
+  var majo=document.getElementById("r-majo").textContent;
+  if(majo!=="—") lines.push("Majorations : "+majo);
+  if(note) lines.push("","Note : "+note);
+  lines.push("","TOTAL : "+document.getElementById("r-total").textContent);
+  lines.push("","Tel : 07 63 70 28 79");
+  lines.push("Email : contact@rsplendissant.com");
+  return lines.join("\n");
+}
+
+function doWhatsApp(){
+  var txt=buildLines();
+  window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");
+}
+
+function doSMS(){
+  var txt=buildLines();
+  window.location.href="sms:?body="+encodeURIComponent(txt);
+}
+
+calc();
+</script>
+</body>
+</html>
